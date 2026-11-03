@@ -1,0 +1,64 @@
+#include <bits/stdc++.h>
+//#include <list>
+
+using namespace std;
+
+void printlist(list<int> &l){
+  cout << "Address:" << &l <<endl;
+  cout << "Size:\t" <<l.size() <<endl;
+  cout << "Elements:(address|value)" <<endl;
+  int idex = 1;
+  for(auto it = l.begin(); it != l.end(); it++)
+    cout<<"["<<index++<<"]"<<&(*it)<<","<<*it<<endsl;
+}
+
+int main(){
+//创建、初始化
+  list<int> lst(7,15);
+  //list<int> lst{12,34,56,78,100};
+  vector<int> v{1,2,3,4,5,6};
+  list<int> lst2(v.begin(),v.end());
+  printlist(lst);
+
+  //移动迭代器
+  auto it=lst.begin();
+  for(int i=0;i<3;i++)
+    it++;
+  advance(it,3);//it自身向后移动3位，it改变
+  advance(it,-2);//向前移动2位
+  //next、prev返回值为新迭代器，不改变原迭代器
+  auto it2 = std::next(it, 3);  // it2 指向 4，it 仍指向 1
+  auto it3 = std::next(it);     // 默认走 1 步，指向 2
+  auto it = lst.end();
+  auto last = std::prev(it);      // 指向最后一个元素 5
+  auto p = std::prev(it, 2);      // 指向 4
+
+  //常用接口
+
+  //在头尾插入元素
+  lst.push_back(27);
+  lst.push_front(11);
+  
+  //只获取第一和最后的元素
+  lst.front();
+  lst.back();
+
+  //在指定位置插入元素,不指定位置则在正中间插入
+  lst.insert();
+  lst.insert(it,3,33);
+  
+  //lst.erase(位置);//删除指定位置元素
+  //lst.remove(item);//删除列表中值为item的元素
+
+  //条件删除
+  lst.remove_if([](int x){return x<6;});//删除小于6的元素，日常使用只需要改return后的条件，其他照抄
+
+  
+  
+  
+  cout<<*it<<endl;
+
+
+return 0;
+}
+  
