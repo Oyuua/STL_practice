@@ -49,16 +49,45 @@ int main(){
   
   //lst.erase(位置);//删除指定位置元素
   //lst.remove(item);//删除列表中值为item的元素
+  cout<<*it<<endl;
 
   //条件删除
   lst.remove_if([](int x){return x<6;});//删除小于6的元素，日常使用只需要改return后的条件，其他照抄
 
+  lst.sort();//sort(lst)---错误
+  lst.reverse()//倒置
+  lst.unique()//去重（要先排序）
   
   
   
-  cout<<*it<<endl;
-
 
 return 0;
+}
+
+//应用
+#include <bits/stdc++.h>
+
+using namespace std;
+int main(){
+    int n,m;
+    cin>>n>>m;
+    list<int> lst;
+    for(int i=1;i<=n;i++){
+        lst.push_back(i);
+    }
+    auto it=lst.begin();
+    while(!lst.empty()){
+        for(int i=0;i<m-1;i++){
+            it++;
+        if(it==lst.end()){
+            it=lst.begin();
+        }
+        cout<<*it<<","<<endl;
+        it=lst.erase(it);//erase删除后会自动返回下一个位置；
+        if(it==lst.end()){
+            it=lst.begin();
+        }
+    }
+
 }
   
