@@ -55,8 +55,23 @@ int main(){
   lst.remove_if([](int x){return x<6;});//删除小于6的元素，日常使用只需要改return后的条件，其他照抄
 
   lst.sort();//sort(lst)---错误
-  lst.reverse()//倒置
-  lst.unique()//去重（要先排序）
+  lst.reverse();//倒置
+  lst.unique();//去重（要先排序）
+  
+  lst1.merge(lst2);//将lst2合并到lst1，并清空lst2
+  //合并前一定要先保证有序，并且顺序一致（统一升序or降序）
+
+  lst1.splice(pos,lst2);//将lst2所有数据迁移到lst1指定位置
+  auto it=lst1.begin();
+  auto it2=lst2.begin();
+  lst1.splice(it,lst2,it2);//将it2位置的lst2元素迁移到lst1的it
+  auto it_end=next(it2,3);
+  lst1.splice(it,lst2,it2,it_end);//将lst2的it2~it_end这一段数据迁移到lst1的it，不包括it_end
+  //也可以对lst1自身进行迁移，但需要迁移的数据段不能包含迁移终点pos
+  lst1.splice(pos,lst1,pos1,pos2)//即pos1~pos2不能包含pos
+
+  
+
   
   
   
@@ -64,7 +79,7 @@ int main(){
 return 0;
 }
 
-//应用
+//应用一
 #include <bits/stdc++.h>
 
 using namespace std;
@@ -90,4 +105,85 @@ int main(){
     }
 
 }
+
+//应用二
+int main(){
+    list<int> A{1,2,3,4,5};
+    list<int> B{2,3,4,6,7,8,10};
+    //方法一
+    list<int> C;
+for(int e:B){
+    if(e%2==0) C.push_back(e);
+}
+auto it1=A.begin();
+A.splice(it1,C);
+
+//方法二
+auto it=B.begin();
+while(it!=B.end()){
+    if(*it%2==0){
+        auto p=it;//一定要保存移动前的位置，否则it++在A中移动
+        it++;
+        A.splice(A.begin(),B,it);
+    }
+    else it++;
+}
+
+//打印A
+for(int x:A){
+    cout<<x<<endl;
+}
+return 0;
+}
+
+//应用三
+ #include <bits/stdc++.h>
+
+ using namespace std;
+
+
+const int MAXN =100005;
+list<int>::iterator it[MAXN];//存储地址
+bool de[MAXN];//判断是否删除
+int main(){
+ int N;
+ cin>>N;
+ list<int> lst1{1};
+ it[1]=lst1.begin();
+ for(int i=2;i<=N;i++){
+     int k,p;
+     cin>>k>>p;
+
+     if(p==0){
+         it[i]=lst1.insert(it[k],i);
+     }
+     else{
+        auto pos=next(it[k]);
+        it[i]=lst1.insert(pos,i);
+     }
+    
+ }
+ //处理删除
+int M;
+cin>>M;
+for(int i=0;i<M;i++){
+    int x;
+    cin>>x;
+    if(!de[x]){
+        lst1.remove(x);
+        de[x]=true;
+    }
+    
+}
+for(int e:lst1){
+    cout<<e<<" ";
+}
+
+
+ return 0;
+
+ }
+
+
+
   
