@@ -5,10 +5,34 @@
 using namespace std;
 int main()
 {
-    queue<int>q;
+    queue<int>q;4
     q.push(10);q.push(20);q.push(30);q.push(40);
     q.front();//10,队头
-    q.pop();//删除队头元素{20,30,40}
+    q.pop();//删除【队头】元素{20,30,40}
+}
+
+//应用const int MAXN=1005;
+bool visited[MAXN];
+
+int main(){
+    queue<int> q;
+    int M,N;
+    int e;
+    int ans=0;
+    for(int i=0;i<N;i++){
+        cin>>e;
+        if(!visited[e]){
+            ans++;
+            visited[e]=true;
+            q.push(e);
+            if(q.size()>M){
+                visited[q.front()]=false;
+                q.pop();
+            }
+        }
+    }
+    cout<<ans<<endl;
+    return 0;
 }
 
 
