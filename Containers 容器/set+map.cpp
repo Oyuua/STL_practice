@@ -53,5 +53,28 @@ else{
   return 0;
 }
 
+//应用#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int N;
+    long long C;
+    if(!(cin >> N >> C)) return 0;
+    map<long long,long long> cnt;//存储每个元素出现的次数，可重复，初始值为0
+    for(int i = 0; i < N; i++){
+        long long a; cin >> a;
+        cnt[a]++;//自动创建{a，0}
+    }
+    long long ans = 0;
+    for(auto &p : cnt){
+        long long A = p.first;
+        auto it = cnt.find(A - C);
+        if(it != cnt.end()) ans += p.second * it->second;
+    }
+    cout << ans << '\n';
+    return 0;
+}
 
 
